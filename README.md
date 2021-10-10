@@ -7,4 +7,5 @@ To-do list:
 - image list system [DONE]
 - comments system [DONE]
 - voting system [DONE]
+- pagination system [WIP]
 - much more in the future [maybe]
