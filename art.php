@@ -164,14 +164,14 @@ if (isset($_GET["upvote"])) {
 		    $changevote = $conn->prepare("UPDATE votes SET vote = ? WHERE ip = ? AND art_id = ?"); 
             $changevote->bind_param("ssi", $voting, $ip, $art_id); 
             $changevote->execute();
-			header("art.php?id=" . $art_id);
+			header('Location: ' . $_SERVER['HTTP_REFERER']);
 		}
 	} else {
 		$voting = "upvote";
 		$addvote = $conn->prepare("INSERT INTO votes (ip, vote, art_id) VALUES (?,?,?)"); 
         $addvote->bind_param("ssi", $ip, $voting, $art_id); 
         $addvote->execute();
-		header("art.php?id=" . $art_id);
+		header('Location: ' . $_SERVER['HTTP_REFERER']);
 	}
 
 }
@@ -236,14 +236,14 @@ if (isset($_GET["downvote"])) {
 		    $changevote = $conn->prepare("UPDATE votes SET vote = ? WHERE ip = ? AND art_id = ?"); 
             $changevote->bind_param("ssi", $voting, $ip, $art_id); 
             $changevote->execute();
-			header("art.php?id=" . $art_id);
+			header('Location: ' . $_SERVER['HTTP_REFERER']);
 		}
 	} else {
 		$voting = "downvote";
 		$addvote = $conn->prepare("INSERT INTO votes (ip, vote, art_id) VALUES (?,?,?)"); 
         $addvote->bind_param("ssi", $ip, $voting, $art_id); 
         $addvote->execute();
-		header("art.php?id=" . $art_id);
+		header('Location: ' . $_SERVER['HTTP_REFERER']);
 	}
 
 }

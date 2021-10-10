@@ -1,6 +1,16 @@
 <?php
 include("db.php");
-$thing = $conn->query("SELECT * FROM arts ORDER BY id DESC"); 
+
+//since im terrible at pagination, here is some code from another repo
+$total_arts = $conn->query('SELECT COUNT(*) FROM arts')->fetch_row()[0]; 
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
+$art_numbers = 9;
+
+$thing = $conn->prepare("SELECT * FROM arts ORDER BY id DESC LIMIT ?,?"); 
+$calc_arts = ($page - 1) * $art_numbers;
+$thing->bind_param("ii", $calc_arts, $art_numbers);
+$thing->execute();
+$things = $thing->get_result();
 $counter = 0;
 ?>
 <html>
@@ -17,7 +27,7 @@ $counter = 0;
 						<table border="1">
 							<tr>
 					<?php
-					while($art = $thing->fetch_assoc()) {
+					while($art = $things->fetch_assoc()) {
 					$counter++;
 						?>
 								<td align="center" width="106" height="136">
@@ -34,6 +44,20 @@ $counter = 0;
 				}
 					}
 				?>
+				                        <tr>
+										    <td colspan="3" align="center">
+											<?php if (ceil($total_arts / $art_numbers) > 0): ?>
+											<?php if ($page > 1): ?>
+											<a href="index.php?page=<?php echo $page-1; ?>">Back</a> 
+											<?php endif; ?>
+											|
+											<?php if ($page < ceil($total_arts / $art_numbers)): ?>
+											<a href="index.php?page=<?php echo $page+1; ?>">Next</a>
+											<?php endif; ?>
+											<?php endif; ?>
+										    </td>
+										</tr>
+									</table>
 										</center>
 									</body>
 								</html>
