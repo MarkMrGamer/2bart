@@ -63,6 +63,10 @@ if (isset($_GET["id"])) {
 	        
 			$comment = htmlspecialchars($_POST["comment"]);
 			
+			if (ctype_space($comment) || preg_match("/ㅤ/", $comment) || preg_match("/‎/", $comment)) {
+				die("Why are you trying to bypass empty characters");
+			}
+
 			if (!empty($comment)) {
 			    $time = date("Y-m-d H:i:s", time() + 30);
 			
@@ -74,8 +78,8 @@ if (isset($_GET["id"])) {
                 $cooldown2 = $cooldown1->get_result();
 		
 		        if ($cooldown2->num_rows == 0) {
-                        $addcooldown = $conn->prepare("INSERT INTO views (ip, cooldown) VALUES (?,?)"); 
-                        $addcooldown->bind_param("si", $ip, $time); 
+                        $addcooldown = $conn->prepare("INSERT INTO cooldown (ip, cooldown_time) VALUES (?,?)"); 
+                        $addcooldown->bind_param("ss", $ip, $time); 
                         $addcooldown->execute();
 						
 					    $comment1 = $conn->prepare("INSERT INTO comments (name, comment, art_id, ip) VALUES (?,?,?,?)"); 
@@ -83,16 +87,16 @@ if (isset($_GET["id"])) {
                         $comment1->execute();
 						header('Location: ' . $_SERVER['HTTP_REFERER']);
                 } else {
-		                $cooldown3 = $conn->prepare("SELECT * FROM cooldown WHERE ip = ?"); 
-                        $cooldown3->bind_param("i", $ip); 
-                        $cooldown3->execute();
-                        $cooldown4 = $cooldown3->get_result();
-				        $cooldown5 = $cooldown4->fetch_assoc();
+				        $cooldown3 = $cooldown2->fetch_assoc();
 				
-     			if ($cooldown5["cooldown"] < date("Y-m-d H:i:s")) {
+     			if ($cooldown3["cooldown_time"] < date("Y-m-d H:i:s")) {
 		            $comment2 = $conn->prepare("INSERT INTO comments (name, comment, art_id, ip) VALUES (?,?,?,?)"); 
                     $comment2->bind_param("ssis", $author, $comment, $art_id, $ip); 
                     $comment2->execute();
+					
+                    $addcooldown2 = $conn->prepare("UPDATE cooldown SET cooldown_time = ? WHERE ip = ?"); 
+                    $addcooldown2->bind_param("ss", $time, $ip); 
+                    $addcooldown2->execute();
 					header('Location: ' . $_SERVER['HTTP_REFERER']);
 			    } else {
 			        die("YOU HAVE A COOLODNW FOR 30 SeCONDS");
@@ -250,62 +254,121 @@ if (isset($_GET["downvote"])) {
 ?>
 <html>
 	<head>
-		<title>2bart: Anarchy art thing</title>
-	</head>
-	<body>
-		<center>
-			<a href="/2bart"><img src="2bart.png"></a><br>
-				<a href="submit_art.php">Submit an art</a>
-				<br>
-					<br>
-						<table border="1">
+		<title>2bart: Semi anarchy art thing</title>
+		<link type="text/css" rel="stylesheet" href="2bart.css">
+		</head>
+		<body>
+			<center>
+				<?php require("header.php"); ?>
+				<div class="art_background_container">
+					<div class="art_container">
+						<div class="art_header">
+							<font class="art_header_text">
+								<?php echo $details2["name"]; ?>
+								<font size="-1">by <?php echo $details2["author"]; ?>
+								</font>
+							</font>
+						</div>
+						<table width="100%" border="0">
 							<tr>
 								<td align="center">
-									<img src="<?php echo $details2["image"]; ?>">
-		                </td>
-									<td valign="top">
-										<font size="5">
-											<b><?php echo $details2["name"]; ?></b>
-										</font>
-										<br>
-											<font size="3">by <?php echo $details2["author"]; ?></font>
-											<br>
-												<font size="3">
-												    <?php echo $views2->num_rows; ?> views <br>
-													<b>↑</b><?php echo $votes2->num_rows; ?><b>↓</b><?php echo $votes4->num_rows; ?></font><br>
-													<a href="art.php?upvote=<?php echo $details2["id"]; ?>">Upvote this art</a><br>
-													<a href="art.php?downvote=<?php echo $details2["id"]; ?>">Downvote this art</a>
-												<br><br><b>Description</b>: <br> <?php echo $details2["description"]; ?><br><br><b>Date</b>: <br> <?php echo $details2["date"]; ?>
-						</td>
-											</tr>
-											<tr>
-												<td>
-						            Comments
-						        </td>
-												<td>
-						            
-						        </td>
-											</tr>
-											<tr>
-										<?php while ($comment_details = $comments2->fetch_assoc()) { ?>
-											<td colspan="2">
-											<b><?php echo $comment_details["name"]; ?></b> - <?php echo $comment_details["date"]; ?></b><br>
-											<?php echo $comment_details["comment"]; ?></b><br>
-											</td>
-										<?php 
+								    <!--[if IE]><a class="image_art" href="<?php echo $details2["image"]; ?>"><img width="380" height="350" src="<?php echo $details2["image"]; ?>"></a><![endif]-->
+									<!--[if !IE]><!--><a class="image_art" href="<?php echo $details2["image"]; ?>"><img width="100%" height="100%" src="<?php echo $details2["image"]; ?>"></a><!--<![endif]-->
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<font size="3">
+											<table width="100%">
+												<tr>
+													<td valign="top" align="left">
+														<font size="3">
+															<b>
+																<?php echo $views2->num_rows; ?></b> views</font>
+													</td>
+													<td align="right">
+														<img src="arrowup.png">
+															<font color="green" size="-1">
+																<?php echo $votes2->num_rows; ?></font>
+															<img src="arrowdown.png">
+																<font color="red" size="-1">
+																	<?php echo $votes4->num_rows; ?></font>
+																<br>
+																	<a class="vote_button" href="art.php?upvote=<?php echo $details2["id"]; ?>"><img src="upvote.png"></a>
+																		<a class="vote_button" href="art.php?downvote=<?php echo $details2["id"]; ?>"><img src="downvote.png"></a>
+																		</td>
+																	</tr>
+																</table>
+																<table width="100%">
+																	<tr>
+																		<td width="200">
+																			<b>Description</b>: <br>
+																				<?php echo $details2["description"]; ?>
+																			</td>
+																			<td>
+																				<b>Date</b>: <br>
+																					<?php echo $details2["date"]; ?>
+																				</td>
+																			</tr>
+																		</table>
+																	</td>
+																</tr>
+															</table>
+														</div>
+														<?php if ($comments2->num_rows > 0) { ?>
+														<div class="art_container">
+															<div class="art_header">
+																<font class="art_header_text">Comments</font>
+															</div>
+															<table style="line-break: anywhere;" width="100%">
+																<?php while ($comment_details = $comments2->fetch_assoc()) { ?>
+																<tr>
+																	<td align="left">
+																		<b>
+																			<?php echo $comment_details["name"]; ?>
+																		</b> - <?php echo $comment_details["date"]; ?>
+																	</b>
+																	<br>
+																		<?php echo $comment_details["comment"]; ?>
+																	</b>
+																	<br>
+																	</td>
+
+																</tr>
+																<?php 
 										}
 										?>
-											</tr>
-											<tr>
-											<td colspan="2">
-											    <form method="POST" action="art.php?id=<?php echo $details2["id"]; ?>">
-				                                    <label>Username (not required):</label> <input type="text" name="username"><br>
-				                                    <label>Comment:</label> <input type="text" name="comment"><br>
-				                                    <input type="submit" id="submit" value="add comment" name="add_comment">
-				                                </form>
-											</td>
-											</tr>
-										</table>
-									</center>
-								</body>
-							</html>
+															</table>
+														</div>
+														<?php 
+																	}
+																	?>
+														<div class="art_container">
+															<div class="art_header">
+																<font class="art_header_text">Add Comment</font>
+															</div>
+															<table width="100%">
+																<tr>
+																	<td>
+																		<form method="POST" action="art.php?id=<?php echo $details2["id"]; ?>">
+																			<font size="2">
+																				<label>Username (not required):</label>
+																			</font>
+																			<input type="text" name="username">
+																				<br>
+																					<font size="2">
+																						<label>Comment:</label>
+																					</font>
+																					<input type="text" name="comment">
+																						<br>
+																							<input type="submit" id="submit" value="add comment" name="add_comment">
+																							</form>
+																						</td>
+																					</tr>
+																				</table>
+																			</div>
+																			<br>
+																			</center>
+																		</body>
+																	</html>
+																	

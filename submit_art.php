@@ -28,6 +28,15 @@ if (isset($_POST["add_art"])) {
 		 if (empty($description)) {
 			die("Please put description br");
 		 }
+		 
+		 if (ctype_space($name) || preg_match("/ㅤ/", $name) || preg_match("/‎/", $name)) {
+			die("Don't put empty characters in name br");
+		 }
+
+		 if (ctype_space($description) || preg_match("/ㅤ/", $description) || preg_match("/‎/", $description)) {
+			die("Don't put empty characters in description br");
+		 }
+		 
 		if (!empty($name) && !empty($description)) {
 			$time = date("Y-m-d H:i:s", time() + 30);
 			
@@ -59,7 +68,7 @@ if (isset($_POST["add_art"])) {
                                 $addcooldown2 = $conn->prepare("UPDATE cooldown SET cooldown_time = ? WHERE ip = ?"); 
                                 $addcooldown2->bind_param("ss", $time, $ip); 
                                 $addcooldown2->execute();
-					    die("Uploaded");
+					    die("Uploaded <a href=\"index.php\">Go back home</a>");
 					}
 			    } else {
 			        die("YOU HAVE A COOLODNW FOR 30 SeCONDS");
@@ -73,19 +82,45 @@ if (isset($_POST["add_art"])) {
 ?>
 <html>
 	<head>
-		<title>2bart: Anarchy art thing</title>
-	</head>
-	<body>
-		<center>
-			<a href="/2bart"><img src="2bart.png"></a>
-				<h1>Submit art</h1>
-				<form method="POST" action="submit_art.php" enctype="multipart/form-data">
-				<label>Art name:</label> <input type="text" name="name"><br>
-				<label>Art description:</label> <input type="text" name="description"><br>
-                                <label>Art author (not required):</label> <input type="text" name="username"><br>
-				<label>Art picture:</label> <input type="file" id="file" name="file" accept="image/png, image/jpeg"><br>
-				<input type="submit" id="submit" value="add art" name="add_art">
-				</form>
-			</center>
-		</body>
-	</html>
+		<title>2bart: Semi anarchy art thing</title>
+		<link type="text/css" rel="stylesheet" href="2bart.css">
+		</head>
+		<body>
+			<center>
+				<?php require("header.php"); ?>
+				<div class="art_background_container">
+					<div class="art_container">
+						<div class="art_header">
+							<font class="art_header_text">Submit Art</font>
+						</div>
+						<br>
+							<form method="POST" action="submit_art.php" enctype="multipart/form-data">
+								<font size="2">
+									<label>Art name:</label>
+								</font>
+								<input type="text" name="name">
+									<br>
+										<font size="2">
+											<label>Art description:</label>
+										</font>
+										<input type="text" name="description">
+											<br>
+												<font size="2">
+													<label>Art author (not required):</label>
+												</font>
+												<input type="text" name="username">
+													<br>
+														<font size="2">
+															<label>Art picture:</label>
+														</font>
+														<input type="file" id="file" name="file" accept="image/png, image/jpeg">
+															<br>
+																<br>
+																	<input type="submit" id="submit" value="add art" name="add_art">
+																	</form>
+																</div>
+															</div>
+														</center>
+													</body>
+												</html>
+												
