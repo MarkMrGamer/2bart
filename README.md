@@ -7,13 +7,13 @@ To-do list:
 - image list system [DONE] ✔️
 - comments system [DONE] ✔️
 - voting system [DONE] ✔️ 
-- pagination system [Probably i may have to do the 1, 2, 3 pagination thing] 🚧
+- pagination system [DONE] ✔️ 
 - Cool css and polished things [DONE] ✔️
 - Image preview thing [DONE] ✔️
 - No empty characters [DONE (?)] ✔️
 - Comment and uploading cooldown [DONE] ✔️
-- Homepage for 2bart [WIP] 🚧
-- Rename the current main page as the arts page [not yet] ❌
+- Homepage for 2bart [WIP %50] 🚧
+- Rename the current main page as the arts page [DONE] ✔️
 - Anonyomous can register as a user [not yet] ❌
 - The admin panel [not yet] ❌
 - More types such as (videos, textures, poems, etc.) [not yet] ❌
