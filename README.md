@@ -19,7 +19,7 @@ To-do list:
 - More types such as (videos, textures, poems, etc.) [not yet] ❌
 - much more in the future [maybe] ❓
 
-Browser compatibility
+Browser compatibility:
 - Mozilla Firefox 1.0 (works pretty well)
 - Internet Explorer 6.0 (works well but had an issue with the paddings)
 - Internet Explorer 5.0 (same for ie 6)
