@@ -12,7 +12,7 @@ To-do list:
 - Image preview thing [DONE] ✔️
 - No empty characters [DONE (?)] ✔️
 - Comment and uploading cooldown [DONE] ✔️
-- Homepage for 2bart [WIP %50] 🚧
+- Homepage for 2bart [WIP 50%] 🚧
 - Rename the current main page as the arts page [DONE] ✔️
 - Anonyomous can register as a user [not yet] ❌
 - The admin panel [not yet] ❌
