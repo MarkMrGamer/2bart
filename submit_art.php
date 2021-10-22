@@ -91,32 +91,32 @@ if (isset($_POST["add_art"])) {
 				<div class="art_background_container">
 					<div class="art_container">
 						<div class="art_header">
-							<font class="art_header_text">Submit Art</font>
+							<font class="art_header_text">Upload File</font>
 						</div>
 						<br>
-							<form method="POST" action="submit_art.php" enctype="multipart/form-data">
+							<form method="POST" action="submit_art.php" class="container_center" enctype="multipart/form-data">
 								<font size="2">
-									<label>Art name:</label>
+									<label>Name:</label>
 								</font>
 								<input type="text" name="name">
 									<br>
 										<font size="2">
-											<label>Art description:</label>
+											<label>Description:</label>
 										</font>
 										<input type="text" name="description">
 											<br>
 												<font size="2">
-													<label>Art author (not required):</label>
+													<label>Author (not required):</label>
 												</font>
 												<input type="text" name="username">
 													<br>
 														<font size="2">
-															<label>Art picture:</label>
+															<label>Picture:</label>
 														</font>
 														<input type="file" id="file" name="file" accept="image/png, image/jpeg">
 															<br>
 																<br>
-																	<input type="submit" id="submit" value="add art" name="add_art">
+																	<input type="submit" id="submit" value="add file" name="add_art">
 																	</form>
 																</div>
 															</div>

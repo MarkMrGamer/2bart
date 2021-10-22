@@ -320,7 +320,7 @@ if (isset($_GET["downvote"])) {
 															<div class="art_header">
 																<font class="art_header_text">Comments</font>
 															</div>
-															<table style="line-break: anywhere;" width="100%">
+															<table style="word-break: break-all;" width="100%">
 																<?php while ($comment_details = $comments2->fetch_assoc()) { ?>
 																<tr>
 																	<td align="left">

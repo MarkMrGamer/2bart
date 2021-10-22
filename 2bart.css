@@ -1,26 +1,33 @@
 .art_container {
   background-color: #7a7d64;
   border: 1px solid #3b3b35;
-  width: 390px;
+  width: 510px;
   display: table;
   margin-top: 23px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+.container_center {
+  text-align: center;
 }
 
 .art_background_container {
   background-color: #686b52;
   border: 1px solid #3b3b35;
-  width: 510px;
+  width: 730px;
   height: 640px;
   display: table;
 }
 
 .banner {
-  background-image: url("banner.png");
+  background-image: url("banner.gif");
   background-color: #545548;
   border-left: 1px solid #3b3b35;
   border-right: 1px solid #3b3b35;
   border-top: 1px solid #3b3b35;
-  width: 510px;
+  width: 730px;
   height: 67px;
 }
 
@@ -29,10 +36,22 @@
   border-left: 1px solid #3b3b35;
   border-right: 1px solid #3b3b35;
   border-top: 1px solid #3b3b35;
-  width: 510px;
+  width: 730px;
   height: 21px;
   color: white;
 }
+
+.banner_links_top {
+  background-color: #545548;
+  border-left: 1px solid #3b3b35;
+  border-right: 1px solid #3b3b35;
+  border-top: 1px solid #3b3b35;
+  width: 510px;
+  height: 21px;
+  color: white;
+  display: none;
+}
+
 
 .banner_link {
   color: white;
@@ -45,11 +64,10 @@
   display: table;
   background-color: #545548;
   border-bottom: 1px solid #3b3b35;
-  width: 390px;
+  width: 510px;
   height: 21px;
   font-weight: bold;
   color: white;
-  text-align: left;
 }
 
 .container_pagination {
@@ -57,10 +75,12 @@
   border-bottom: 1px solid #3b3b35;
   border-left: 1px solid #3b3b35;
   border-right: 1px solid #3b3b35;
-  width: 390px;
+  width: 510px;
   height: 21px;
   font-weight: bold;
   color: white;
+  margin-left: auto;
+  margin-right: auto;
   text-align: center;
 }
 
@@ -72,16 +92,27 @@
 .art_header_text {
   margin: 5px;
   font-size: 17px;
+  font-weight: bold;
+  color: white;
+  word-break: break-all;
+}
+
+.recent_header_text {
+  font-size: 15px;
+  font-weight: bold;
+  color: white;
 }
 
 .container_art_title {
   margin: 5px;
   font-size: 13px;
+  word-break: break-all;
 }
 
 .container_art_author {
   margin: 5px;
   font-size: 11px;
+  word-break: break-all;
 }
 
 .container_art_picture {
@@ -94,6 +125,7 @@ body {
   font-family: Arial;
   margin: 0px;
   padding: 0px;
+  color: white;
 }
 
 a.container_pagination_link {
@@ -107,6 +139,7 @@ a.container_art_link {
     text-decoration: none;
     color: #abac98;
     font-weight: bold;
+    word-break: break-all;
 } 
 
 a img {
