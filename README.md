@@ -15,7 +15,7 @@ To-do list:
 - Homepage for 2bart [WIP 50%] 🚧
 - Rename the current main page as the arts page [DONE] ✔️
 - Anonyomous can register as a user [not yet] ❌
-- The admin panel [WIP 5%] ❌
+- The admin panel [WIP 5%] 🚧
 - More types such as (videos, textures, poems, etc.) [not yet] ❌
 - much more in the future [maybe] ❓
 
